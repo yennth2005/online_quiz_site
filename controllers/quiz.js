@@ -1,5 +1,4 @@
 import {getAllQuiz, getQuestionByIdQuiz} from "../services/api.js";
-
 const app = {
     // hiển thị ds các câu hỏi 
     //async dùng để khai báo 1 hàm  bất đồng bộ
@@ -42,36 +41,19 @@ const app = {
                     const id = item.getAttribute("data-id");
                     console.log(id);
                     //chuyển trang câu hỏi
-                    window.location=`question.html?id=${id}`  ;
+                    window.location=`question.html?id=${id}`;
                 }
             })
             
         })
     },
-    renderListQuestion: async function(){
-        const data = await getAllQuiz(); // bất đồng bộ //await chờ đợi xử lý bdb xong, gán kqua vào biến respone
-        const listQuiz = data?.map((item,index)=>{
-            // 2.1 Nếu trạng thái true thì mới hiển thị
-            if(item.isActive){
-                return `
-                    <a href="#" data-id="${item.id}" class="quiz-items list-group-item list-group-item-action list-group-item-primary">
-                        ${item.title} : ${item.description}
-                    </a>
-                `
-            }
-        }).join("")
-        const quizItems = document.querySelectorAll(".quiz-items");
-        const questions= await getQuestionByIdQuiz(`${item.id}`);
-        console.log(questions);
-        
-        
-    },
+    
+    
     start: function(){
         // console.log("haien");
         // render: Hiển thị giao diện
         // handle: Thực thi logic
         this.renderListQuiz();
-        this.renderListQuestion();
     }
 }
-app.start()
+app.start();
