@@ -33,33 +33,25 @@
       "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse quisquam nesciunt aliquam"
     },
     {
-      "id": "ghyk",
-      "title": "Quiz 5",
-      "isActive": false,
-      "time": 20,
-      "quantityQuestion": 10,
-      "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse quisquam nesciunt aliquam"
-    },
-    {
-      "id": "cf3a",
       "title": "test",
+      "time": "",
+      "description": "",
       "isActive": false,
-      "time": "1111",
-      "description": "oke"
+      "id": "ghyk"
     },
     {
-      "id": "94b2",
-      "title": "test11",
+      "id": "0ff7",
+      "title": "tttt",
       "isActive": true,
-      "time": "1111",
-      "description": "1234"
+      "time": "111",
+      "description": "1111"
     },
     {
-      "id": "47b4",
-      "title": "test2",
-      "isActive": true,
-      "time": "11",
-      "description": "test"
+      "id": "2f8a",
+      "title": "tttt2",
+      "isActive": false,
+      "time": "111",
+      "description": "1"
     }
   ],
   "questions": [
@@ -334,6 +326,120 @@
       "correctAnser": [
         "1"
       ]
+    },
+    {
+      "id": "972c",
+      "questionTiltle": "123",
+      "answers": [
+        {
+          "id": "1",
+          "answerTitle": "123"
+        },
+        {
+          "id": "2",
+          "answerTitle": "123"
+        },
+        {
+          "id": "3",
+          "answerTitle": "111"
+        },
+        {
+          "id": "4",
+          "answerTitle": "112"
+        }
+      ],
+      "quizId": "0ff7",
+      "type": 1,
+      "correctAnser": [
+        "2"
+      ]
+    }
+  ],
+  "rank": [
+    {
+      "id": "123",
+      "quizId": "abcd",
+      "name": "hải yến",
+      "score": 9,
+      "time": 28
+    },
+    {
+      "id": "b56d",
+      "name": "",
+      "score": 5,
+      "time": "\n            00\n            :\n            00"
+    },
+    {
+      "id": "6187",
+      "name": "yếnn",
+      "score": 1,
+      "time": "\n            00\n            :\n            26"
+    },
+    {
+      "id": "2319",
+      "name": "2rrenss",
+      "score": 2,
+      "time": "\n            00\n            :\n            16"
+    },
+    {
+      "id": "34fd",
+      "name": "111",
+      "score": 2,
+      "time": "\n            00\n            :\n            24"
+    },
+    {
+      "id": "f5d3",
+      "name": "123",
+      "score": 0,
+      "time": "\n            00\n            :\n            00"
+    },
+    {
+      "id": "b9c3",
+      "name": "yếnnnnn",
+      "score": 1,
+      "time": "\n            00\n            :\n            20"
+    },
+    {
+      "id": "c752",
+      "name": "www",
+      "score": 0,
+      "time": "\n            00\n            :\n            00"
+    },
+    {
+      "id": "8602",
+      "name": "yen123",
+      "score": 1,
+      "time": "\n            00\n            :\n            26"
+    },
+    {
+      "id": "eb32",
+      "name": null,
+      "score": 0,
+      "time": "\n            00\n            :\n            00"
+    },
+    {
+      "id": "8165",
+      "name": "yen",
+      "score": 0,
+      "time": "\n            00\n            :\n            00"
+    },
+    {
+      "id": "9311",
+      "name": null,
+      "score": 0,
+      "time": "\n            00\n            :\n            00"
+    },
+    {
+      "id": "04c5",
+      "name": "yen",
+      "score": 1,
+      "time": "\n            00\n            :\n            27"
+    },
+    {
+      "id": "aca0",
+      "name": null,
+      "score": 0,
+      "time": "\n            00\n            :\n            00"
     }
   ]
 }
