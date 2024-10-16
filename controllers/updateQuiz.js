@@ -51,7 +51,5 @@ const app = {
         this.updateQuizs();
     }
 };
-
-// Chờ cho DOM được tải hoàn toàn trước khi khởi chạy
 app.start();
 

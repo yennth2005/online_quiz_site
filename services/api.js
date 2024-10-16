@@ -111,20 +111,17 @@ export const updateQuiz = async (id,data)=>{
         alert("error")
     }
 };
-export const updateQuestionById = async (id, data)=>{
+export const updateQuestionById = async (id, data) => {
     try {
-        data.forEach(async(item)=>{
-            await fetch(`http://localhost:3000/questions/quizId=${id}`,
-                {method: 'put',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(item)
-        }) 
-            }
-        );
+        await fetch(`http://localhost:3000/questions/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
     } catch (error) {
-        alert("error")
+        alert("Có lỗi xảy ra trong quá trình cập nhật câu hỏi.");
     }
-}
+};
 export const addRank = async (data) => {
     try {
         const res = await fetch('http://localhost:3000/rank', {

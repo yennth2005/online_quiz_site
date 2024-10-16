@@ -6,36 +6,32 @@ const app = {
         const idQuiz = searchParam.get('quizId');
         const dataQuestions = await getQuestionByIdQuiz(idQuiz);
         console.log(dataQuestions);
-        
-        // Kiểm tra nếu dataQuestions là một mảng
+
         if (Array.isArray(dataQuestions)) {
             const questionContainer = document.getElementById('list_question');
-            questionContainer.innerHTML = ''; // Xóa nội dung cũ
+            questionContainer.innerHTML = '';
 
-            // Lặp qua mỗi câu hỏi và render ra giao diện
             dataQuestions.forEach((ques, index) => {
-                console.log(ques);
-                
                 const questionHtml = `
                     <div class="question_item border border-2 rounded p-4 mb-2">
                         <h4 class="question_number">Câu hỏi: ${index + 1}</h4>
                         <div class="mb-3">
-                            <label for="question_${index + 1}" class="form-label">Nội dung câu hỏi</label>
-                            <textarea class="form-control question-content" id="question_content_${ques.id}" rows="3">${ques.questionTiltle}</textarea>
+                            <label for="question_${ques.id}" class="form-label">Nội dung câu hỏi</label>
+                            <textarea class="form-control" id="question_content_${ques.id}" rows="3">${ques.questionTiltle}</textarea>
                         </div>
                         <div class="answer_items mt-3">
-                            ${ques.answers.map((answer, ansIndex) => `
+                            ${ques.answers.map((answer) => `
                                 <div class="form-check fs-5 mb-3">
                                     <input class="form-check-input border border-2 border-primary" 
-                                           type="${ques.type == 1 ? 'radio' : 'checkbox'}" 
+                                           type="${ques.type === 1 ? 'radio' : 'checkbox'}" 
                                            name="question_${ques.id}" 
                                            id="check_${ques.id}_${answer.id}" 
                                            ${ques.correctAnser.includes(answer.id) ? 'checked' : ''}>
                                     <div class="mb-3">
-                                        <input type="text" class="form-control answer-content" 
+                                        <input type="text" class="form-control" 
                                                id="answer_${ques.id}_${answer.id}" 
                                                value="${answer.answerTitle}" 
-                                               placeholder="Nhập nội dung đáp ${ansIndex + 1}">
+                                               placeholder="Nhập nội dung đáp ${answer.id}">
                                     </div>
                                 </div>
                             `).join('')}
@@ -45,57 +41,88 @@ const app = {
                 questionContainer.innerHTML += questionHtml;
             });
 
-            // Gọi hàm cập nhật sau khi render xong các câu hỏi
-            this.updateQuestion(dataQuestions);
+            const btnSubmit = document.getElementById('btn_submit');
+            btnSubmit.addEventListener('click', async (e) => {
+                e.preventDefault();
+                await this.updateQuestions(dataQuestions);
+            });
         } else {
             console.error("Data không phải là mảng");
         }
     },
 
-    // Hàm để cập nhật lại các câu hỏi
-    updateQuestion: function (dataQuestions) {
-        document.getElementById('btn_submit').addEventListener('click', async () => {
-            const updatedQuestions = dataQuestions.map((ques) => {
-                // Lấy nội dung câu hỏi
-                const questionTitle = document.getElementById(`question_content_${ques.id}`).value;
+    updateQuestions: async function (dataQuestions) {
+        const updatedQuestions = [];
 
-                // Lấy các đáp án đã cập nhật
-                const updatedAnswers = ques.answers.map((answer) => {
-                    const answerContent = document.getElementById(`answer_${ques.id}_${answer.id}`).value;
-                    const isChecked = document.getElementById(`check_${ques.id}_${answer.id}`).checked;
-                    return {
-                        ...answer,
-                        answerTitle: answerContent,
-                        correctAnswer: isChecked ? answer.id : null // Cập nhật câu trả lời đúng
-                    };
-                });
+        for (let i = 0; i < dataQuestions.length; i++) {
+            const questionContent = document.getElementById(`question_content_${dataQuestions[i].id}`);
+            const answerList = document.querySelectorAll(`.question_item:nth-child(${i + 1}) input[type="text"]`);
+            const checks = document.querySelectorAll(`.question_item:nth-child(${i + 1}) input[type="radio"], .question_item:nth-child(${i + 1}) input[type="checkbox"]`);
 
-                // Lọc ra các đáp án đúng
-                const correctAnser = updatedAnswers
-                    .filter((answer) => answer.correctAnswer)
-                    .map((answer) => answer.correctAnswer);
-
-                return {
-                    ...ques,
-                    questionTiltle: questionTitle,
-                    answers: updatedAnswers,
-                    correctAnser: correctAnser
-                };
-            });
-
-            // Gọi API để cập nhật từng câu hỏi
-            for (const question of updatedQuestions) {
-                await updateQuestionById(question.id, question);
+            const isValid = this.validate(questionContent, checks, answerList);
+            if (!isValid) {
+                return; // Dừng lại nếu có lỗi
             }
 
-            alert("Cập nhật thành công!");
-        });
+            const item = {
+                id: dataQuestions[i].id,
+                questionTiltle: questionContent.value,
+                answers: [],
+                quizId: dataQuestions[i].quizId,
+                type: dataQuestions[i].type,
+                correctAnser: []
+            };
+
+            answerList.forEach((ans, index) => {
+                item.answers.push({
+                    id: (index + 1).toString(),
+                    answerTitle: ans.value
+                });
+            });
+
+            checks.forEach((check, index) => {
+                if (check.checked) {
+                    item.correctAnser.push((index + 1).toString());
+                }
+            });
+
+            updatedQuestions.push(item);
+        }
+
+        for (const question of updatedQuestions) {
+            await updateQuestionById(question.id, question);
+        }
+
+        alert("Cập nhật thành công!");
     },
-    
+
+    validate: function (questionContent, checks, answerList) {
+        if (!questionContent.value.trim()) {
+            alert("Cần nhập nội dung câu hỏi");
+            questionContent.focus();
+            return false;
+        }
+
+        const isCheckRadio = Array.from(checks).some(check => check.checked);
+        if (!isCheckRadio) {
+            alert("Cần lựa chọn đáp đúng");
+            checks[0].focus();
+            return false;
+        }
+
+        const isCheckAnswer = Array.from(answerList).every(ans => ans.value.trim());
+        if (!isCheckAnswer) {
+            alert("Cần nhập nội dung đáp án");
+            answerList[0].focus();
+            return false;
+        }
+
+        return true;
+    },
+
     start: function () {
         this.renderQuestions();
     }
 };
 
-    app.start();
-
+app.start();
