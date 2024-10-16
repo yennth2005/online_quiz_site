@@ -59,6 +59,8 @@ const app = {
     renderAnswers: function (listAnswers, idQuestion, type) {
         listAnswers = this.random(listAnswers);
         return listAnswers?.map((ans, index) => {
+            console.log(ans);
+            
             return `
                 <div class="form-check fs-5 mb-3">
                     <input class="form-check-input border border-2 border-primary" role="button" 
@@ -196,17 +198,20 @@ const app = {
         })
     },
     addRank: async function(nameUser,scoreUser,timeUser){
+        const searchParam= new URLSearchParams(window.location.search);
+        const idQuiz = searchParam.get('id'); 
         const data={
             name: nameUser,
             score: scoreUser,
-            time: timeUser
+            time: timeUser,
+            quizId: idQuiz
         }
         console.log(data);
         await addRank(data);
-        this.renderRank();        
+        this.renderRank(idQuiz);        
     },
-    renderRank: async function(){
-        const rankList = await getRank();
+    renderRank: async function(id){
+        const rankList = await getRank(id);
 
         // Sắp xếp danh sách xếp hạng theo điểm
         const list = rankList.sort((a, b) => b.score - a.score);

@@ -39,7 +39,7 @@ const app = {
                 if(window.confirm(`Bạn có chắc chắn làm ${title}`)){
                     //thêm thuộc tính
                     const id = item.getAttribute("data-id");
-                    console.log(id);
+                    // console.log(id);
                     //chuyển trang câu hỏi
                     window.location=`question.html?id=${id}`;
                 }

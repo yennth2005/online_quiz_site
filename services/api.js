@@ -140,9 +140,9 @@ export const addRank = async (data) => {
         alert("error");
     }
 };
-export const getRank = async ()=>{
+export const getRank = async (idQuiz)=>{
     try {
-        const res= await fetch(`http://localhost:3000/rank`);
+        const res= await fetch(`http://localhost:3000/rank?quizId=${idQuiz}`);
         const data = res.json();
         return data
     } catch (error) {
