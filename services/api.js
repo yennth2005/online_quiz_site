@@ -100,7 +100,7 @@ export const addQuestions =async(datas)=>{
 }
 export const updateQuiz = async (id,data)=>{
     try {
-        await fetch(`http://localhost:3000/quizs/${id}`, {  // Đúng URL
+        await fetch(`http://localhost:3000/quizs/${id}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)

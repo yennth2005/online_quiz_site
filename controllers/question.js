@@ -165,7 +165,7 @@ const app = {
         alert(`Bạn trả lời đúng ${countRight}/${listQuestions.length}`)
         // console.log(listStatus);
         const nameUser = prompt("Nhập tên của bạn: ")
-        this.renderRank(nameUser,countRight,document.getElementById('timer').innerHTML)
+        this.addRank(nameUser,countRight,document.getElementById('timer').innerHTML)
     },
     checkEqual: function (arr1, arr2) {
 
@@ -195,7 +195,7 @@ const app = {
             title.innerHTML = `${title.textContent} ${item.status ? `<span class="badge text-bg-success">Đúng</span>` : `<span class="badge text-bg-danger">Sai</span>`}`
         })
     },
-    renderRank: async function(nameUser,scoreUser,timeUser){
+    addRank: async function(nameUser,scoreUser,timeUser){
         const data={
             name: nameUser,
             score: scoreUser,
@@ -203,9 +203,9 @@ const app = {
         }
         console.log(data);
         await addRank(data);
-        this.getRank();        
+        this.renderRank();        
     },
-    getRank: async function(){
+    renderRank: async function(){
         const rankList = await getRank();
 
         // Sắp xếp danh sách xếp hạng theo điểm

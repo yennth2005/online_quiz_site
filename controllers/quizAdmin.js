@@ -30,23 +30,7 @@ const app = {
                 const idQuiz = quiz.dataset.id;
                 const quizData = await getQuizById(idQuiz);
                 
-                // Kiểm tra xem các phần tử có tồn tại hay không trước khi gán giá trị
-                const inputTitle = document.getElementById('titleUpdate');
-                const inputTime = document.getElementById('timeUpdate');
-                const inputDesc = document.getElementById('descriptionUpdate');
-                const inputIsActive = document.getElementById('quizIsActive');
-            
-                if (inputTitle && inputTime && inputDesc && inputIsActive) {
-                    // Điền dữ liệu vào form
-                    inputTitle.value = quizData.title;
-                    inputTime.value = quizData.time;
-                    inputDesc.value = quizData.description;
-                    inputIsActive.checked = quizData.isActive;
-                    
-                    // Lưu ID của quiz vào form để sử dụng sau này
-                    document.getElementById('updateForm').dataset.quizId = idQuiz;
-                }
-            
+               
                 // Chuyển đến trang update
                 window.location.href = `../admin/updateQuiz.html?id=${idQuiz}`;
             });

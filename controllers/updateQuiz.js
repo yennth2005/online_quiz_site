@@ -1,23 +1,49 @@
-import { updateQuiz } from "../services/api.js"; // Đảm bảo bạn đã có hàm updateQuiz trong api.js
+import { updateQuiz,getQuizById } from "../services/api.js";
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const idQuiz = urlParams.get('id'); // Lấy ID từ URL
-
-    if (idQuiz) {
-        // Gọi API để lấy dữ liệu của quiz theo ID
-        const quizData = await getQuizById(idQuiz);
-
-        // Kiểm tra và gán giá trị vào form
-        if (quizData) {
-            document.getElementById('titleUpdate').value = quizData.title;
-            document.getElementById('timeUpdate').value = quizData.time;
-            document.getElementById('descriptionUpdate').value = quizData.description;
-            document.getElementById('quizIsActive').checked = quizData.isActive;
-        } else {
-            console.log('Không thể tải dữ liệu quiz.');
-        }
-    } else {
-        console.log('Không tìm thấy ID quiz trong URL.');
+const app={
+    updateQuizs: async function(){
+            const urlParams = new URLSearchParams(window.location.search);
+            const idQuiz = urlParams.get('id'); 
+        
+            if (idQuiz) {
+                const quizData = await getQuizById(idQuiz);
+        
+                if (quizData) {
+                    document.getElementById('titleUpdate').value = quizData.title;
+                    document.getElementById('timeUpdate').value = quizData.time;
+                    document.getElementById('descriptionUpdate').value = quizData.description;
+                    document.getElementById('quizIsActive').checked = quizData.isActive;
+                } else {
+                    console.log('Không thể tải dữ liệu quiz.');
+                }
+        
+            } else {
+                console.log('Không tìm thấy ID quiz trong URL.');
+            }
+            const btnSubmit=document.getElementById('btn-submit');
+            btnSubmit.addEventListener('submit',async(e)=>{
+                e.preventDefault();
+                this.handleUpdate(idQuiz);
+                
+            })
+    },
+    handleUpdate: async function (id) {
+            const inputTitle= document.getElementById('titleUpdate');
+                const inputTime= document.getElementById('timeUpdate');
+                const inputDescription= document.getElementById('descriptionUpdate');
+                const inputIsActive= document.getElementById('quizIsActive');
+                const data={
+                    title: inputTitle.value,
+                    time: inputTime.value,
+                    description: inputDescription.value,
+                    isActive: inputIsActive.value
+                }
+                console.log(data);
+                await updateQuiz(id,data);
+                alert("cập nhật thành công")
+    },
+    start: function(){
+        this.updateQuizs();
     }
-});
+}
+app.start();
