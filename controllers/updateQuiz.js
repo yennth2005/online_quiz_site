@@ -53,6 +53,5 @@ const app = {
 };
 
 // Chờ cho DOM được tải hoàn toàn trước khi khởi chạy
-document.addEventListener('DOMContentLoaded', () => {
-    app.start();
-});
+app.start();
+

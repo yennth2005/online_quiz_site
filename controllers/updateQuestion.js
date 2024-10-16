@@ -97,7 +97,5 @@ const app = {
     }
 };
 
-// Chờ DOM tải hoàn toàn trước khi khởi chạy
-document.addEventListener('DOMContentLoaded', () => {
     app.start();
-});
+
