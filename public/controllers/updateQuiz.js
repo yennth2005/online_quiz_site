@@ -1,4 +1,4 @@
-import { updateQuiz, getQuizById } from "../services/api.js";
+import { updateQuiz, getQuizById } from "../../services/api.js";
 
 const app = {
     updateQuizs: async function () {
